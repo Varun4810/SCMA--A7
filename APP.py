@@ -18,8 +18,13 @@ with st.form(key='expense_form'):
     submit_button = st.form_submit_button(label='Add Expense')
 
     if submit_button:
-        new_expense = {'Date': date, 'Description': description, 'Category': category, 'Amount': amount}
-        st.session_state['expenses'] = st.session_state['expenses'].append(new_expense, ignore_index=True)
+        new_expense = pd.DataFrame({
+            'Date': [date],
+            'Description': [description],
+            'Category': [category],
+            'Amount': [amount]
+        })
+        st.session_state['expenses'] = pd.concat([st.session_state['expenses'], new_expense], ignore_index=True)
         st.success('Expense added!')
 
 # Display all expenses
